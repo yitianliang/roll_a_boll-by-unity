@@ -10,8 +10,9 @@ public class movement : MonoBehaviour
     private Rigidbody rd;
     public float a;
     public float b;
-    private bool movecondition=true;
+    public float c = 4.1f;
 
+    private bool movecondition=true;
     private float score;
     private float check;
 
@@ -29,13 +30,19 @@ public class movement : MonoBehaviour
     {
         if (movecondition)
         {
+            if (float.Parse(string.Format("{0:F1}", transform.position.y)) > 0.5f) return;
+
             // 得到一个-1到1的值 返回-1代表按下A键，返回1代表按下D键
             float h = Input.GetAxis("Horizontal") * a;
 
             // 与上面一样，返回-1代表按下S键，返回1代表按下W键
             float v = Input.GetAxis("Vertical") * b;
 
-            rd.AddForce(new Vector3(h, 0, v));
+            // 使用getkeydown获取到键盘按键
+            bool jump = Input.GetKeyDown(KeyCode.Space); // keycode.xxx 能够获取指定位置的按键
+            
+
+            rd.velocity = new Vector3(h,0,v);
         }
     }
 
