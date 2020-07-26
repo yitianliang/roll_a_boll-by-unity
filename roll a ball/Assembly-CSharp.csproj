@@ -65,6 +65,8 @@
     <Compile Include="Assets\Scenes\flowTaget.cs" />
     <Compile Include="Assets\Scenes\gold.cs" />
     <Compile Include="Assets\Scenes\movement.cs" />
+    <Compile Include="Assets\canmer_rotate.cs" />
+    <Compile Include="Assets\first_persion.cs" />
     <Reference Include="UnityEngine">
       <HintPath>D:/Unity/2019.2.12f1/2019.3.14f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>

@@ -11,6 +11,9 @@ public class movement : MonoBehaviour
     public float a;
     public float b;
     public float c = 4.1f;
+    public float speed=1;
+
+    public float margin = 0.1f;
 
     private bool movecondition=true;
     private float score;
@@ -28,22 +31,39 @@ public class movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (movecondition)
-        {
-            if (float.Parse(string.Format("{0:F1}", transform.position.y)) > 0.5f) return;
+        // 固定摄像机移动
+        //if (movecondition)
+        //{
+        //    if (float.Parse(string.Format("{0:F1}", transform.position.y)) > 0.5f) return;
 
-            // 得到一个-1到1的值 返回-1代表按下A键，返回1代表按下D键
-            float h = Input.GetAxis("Horizontal") * a;
+        //    // 得到一个-1到1的值 返回-1代表按下A键，返回1代表按下D键
+        //    float h = Input.GetAxis("Horizontal") * a;
 
-            // 与上面一样，返回-1代表按下S键，返回1代表按下W键
-            float v = Input.GetAxis("Vertical") * b;
+        //    // 与上面一样，返回-1代表按下S键，返回1代表按下W键
+        //    float v = Input.GetAxis("Vertical") * b;
 
-            // 使用getkeydown获取到键盘按键
-            bool jump = Input.GetKeyDown(KeyCode.Space); // keycode.xxx 能够获取指定位置的按键
-            
+        //    // 使用getkeydown获取到键盘按键
+        //    bool jump = Input.GetKeyDown(KeyCode.Space); // keycode.xxx 能够获取指定位置的按键
 
-            rd.velocity = new Vector3(h,0,v);
-        }
+
+        //    rd.velocity = new Vector3(h,0,v);
+        //}
+
+        // 首先判断物体是否在地面上
+
+            // 第一人称视角移动
+            float moveX = Input.GetAxis("Horizontal");
+            float moveY = Input.GetAxis("Vertical");
+
+            transform.Translate(new Vector3(moveX, 0, moveY) * Time.deltaTime * speed);
+
+            // 然后在按空格键控制跳跃
+            if (Input.GetButtonDown("Jump"))
+            {
+                rd.AddForce(new Vector3(0, c, 0), ForceMode.Impulse);
+            }
+       
+
     }
 
     // 触碰检测
@@ -110,7 +130,4 @@ public class movement : MonoBehaviour
 
         CheckEnd(collider);
     }
-
-
-
 }
