@@ -11,13 +11,14 @@ public class movement : MonoBehaviour
     public float a;
     public float b;
     public float c = 4.1f;
-    public float speed=1;
+    public float speed = 1;
 
     public float margin = 0.1f;
 
-    private bool movecondition=true;
+    private bool movecondition = true;
     private float score;
     private float check;
+    private bool grounded = true; // 检测地面
 
     public Text text;
     public GameObject success;
@@ -49,7 +50,9 @@ public class movement : MonoBehaviour
         //    rd.velocity = new Vector3(h,0,v);
         //}
 
-        // 首先判断物体是否在地面上
+        if (movecondition)
+        {
+            // 首先判断物体是否在地面上
 
             // 第一人称视角移动
             float moveX = Input.GetAxis("Horizontal");
@@ -57,12 +60,12 @@ public class movement : MonoBehaviour
 
             transform.Translate(new Vector3(moveX, 0, moveY) * Time.deltaTime * speed);
 
-            // 然后在按空格键控制跳跃
-            if (Input.GetButtonDown("Jump"))
+            // 然后在按空格键控制跳跃，检测在地面的时候才能跳跃
+            if (Input.GetButtonDown("Jump") && grounded == true)
             {
                 rd.AddForce(new Vector3(0, c, 0), ForceMode.Impulse);
             }
-       
+        }
 
     }
 
@@ -81,6 +84,25 @@ public class movement : MonoBehaviour
     //    }
 
     //}
+
+    // 检测控制体是否接触地面，也就是控制体的碰撞体是否接触到地面的碰撞体
+    private void OnCollisionEnter(Collision collision)
+    {
+        // 在地面时候，保持 grounded 为 true 即可。
+        if (collision.gameObject.tag == "ground")
+        {
+            grounded = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        // 在离开地面时，使 grounded 为 false 即可。
+        if (collision.gameObject.tag == "ground")
+        {
+            grounded = false;
+        }
+    }
 
     // 结束
     private void CheckEnd(Collider collider)
