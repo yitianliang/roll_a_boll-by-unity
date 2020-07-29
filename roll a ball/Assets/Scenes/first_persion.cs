@@ -12,12 +12,12 @@ public class first_persion : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void LateUpdate()
     {
+
         float mouseX = Input.GetAxis("Mouse X") * speed;
         float mouseY = Input.GetAxis("Mouse Y") * speed;
         rot.x = rot.x - mouseY;
@@ -26,5 +26,7 @@ public class first_persion : MonoBehaviour
         transform.eulerAngles = rot; // 所有方向设定好后，摄像头的角度 = rot
 
         player.transform.eulerAngles = new Vector3(0, rot.y, 0); // 角色角度只能通过MouseX改变大小，也就是锁定rot.y
+
     }
+
 }

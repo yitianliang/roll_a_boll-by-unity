@@ -23,6 +23,11 @@ public class movement : MonoBehaviour
     public Text text;
     public GameObject success;
 
+    // 控制摄像头
+    public float cameraspeed; // 控制鼠标灵敏度
+    public GameObject player; // 选择跟随得胶囊体
+    Vector3 rot = new Vector3(0, 0, 0); // 初始化变量 rot
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,8 +62,8 @@ public class movement : MonoBehaviour
             // 第一人称视角移动
             float moveX = Input.GetAxis("Horizontal");
             float moveY = Input.GetAxis("Vertical");
-
-            transform.Translate(new Vector3(moveX, 0, moveY) * Time.deltaTime * speed);
+            //        向正方向移动（移动的速度V3,Space.self/world）
+            transform.Translate(new Vector3(moveX,0,moveY) * Time.deltaTime * speed);
 
             // 然后在按空格键控制跳跃，检测在地面的时候才能跳跃
             if (Input.GetButtonDown("Jump") && grounded == true)
@@ -66,6 +71,21 @@ public class movement : MonoBehaviour
                 rd.AddForce(new Vector3(0, c, 0), ForceMode.Impulse);
             }
         }
+
+    }
+
+    private void LateUpdate()
+    {
+
+        float mouseX = Input.GetAxis("Mouse X") * cameraspeed;
+        float mouseY = Input.GetAxis("Mouse Y") * cameraspeed;
+        rot.x = rot.x - mouseY;
+        rot.y = rot.y + mouseX;
+
+        rot.z = 0; // 锁定摄像头移动的角度Z轴，防止左右倾斜；
+        transform.eulerAngles = rot; // 所有方向设定好后，摄像头的角度 = rot
+
+        player.transform.eulerAngles = new Vector3(0, rot.y, 0); // 角色角度只能通过MouseX改变大小，也就是锁定rot.y
 
     }
 
