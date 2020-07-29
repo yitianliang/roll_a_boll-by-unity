@@ -69,6 +69,7 @@ public class movement : MonoBehaviour
 
     }
 
+
     // 触碰检测
     //private void OnCollisionEnter(Collision collision)
     //{
