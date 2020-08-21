@@ -31,6 +31,7 @@ public class movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false; // 使鼠标消失
         rd = GetComponent<Rigidbody>();
     }
 
@@ -85,7 +86,8 @@ public class movement : MonoBehaviour
         rot.z = 0; // 锁定摄像头移动的角度Z轴，防止左右倾斜；
         transform.eulerAngles = rot; // 所有方向设定好后，摄像头的角度 = rot
 
-        player.transform.eulerAngles = new Vector3(0, rot.y, 0); // 角色角度只能通过MouseX改变大小，也就是锁定rot.y
+        player.transform.eulerAngles = new Vector3(0, rot.y, 0);  //角色角度只能通过MouseX改变大小，也就是锁定rot.y
+
 
     }
 
