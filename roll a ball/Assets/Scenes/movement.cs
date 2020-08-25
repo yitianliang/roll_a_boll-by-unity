@@ -63,7 +63,7 @@ public class movement : MonoBehaviour
             // 第一人称视角移动
             float moveX = Input.GetAxis("Horizontal");
             float moveY = Input.GetAxis("Vertical");
-            //        向正方向移动（移动的速度V3,Space.self/world）
+            // 向正方向移动（移动的速度V3,Space.self/world）,space.self 是默认选项
             transform.Translate(new Vector3(moveX,0,moveY) * Time.deltaTime * speed);
 
             // 然后在按空格键控制跳跃，检测在地面的时候才能跳跃
@@ -86,7 +86,15 @@ public class movement : MonoBehaviour
         rot.z = 0; // 锁定摄像头移动的角度Z轴，防止左右倾斜；
         transform.eulerAngles = rot; // 所有方向设定好后，摄像头的角度 = rot
 
-        player.transform.eulerAngles = new Vector3(0, rot.y, 0);  //角色角度只能通过MouseX改变大小，也就是锁定rot.y
+        // 控制摄像机在Y轴移动的视角
+        if (rot.x <= -70)
+        {
+            player.transform.eulerAngles = new Vector3(-70, rot.y, 0);  //角色角度只能通过MouseX改变大小
+        }
+        else if (rot.x >= 50)
+        {
+            player.transform.eulerAngles = new Vector3(50, rot.y, 0);  //角色角度只能通过MouseX改变大小
+        }
 
 
     }
